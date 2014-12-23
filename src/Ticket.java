@@ -6,12 +6,12 @@ import java.io.Serializable;
 public class Ticket implements Comparable, Serializable {
 
     private String id;
-    private double price;
+    private Double price;
     private Type type;
     private Customer customer;
     private Trip trip;
 
-    public Ticket(String id, double price, Type type, Customer customer, Trip trip) {
+    public Ticket(String id, Double price, Type type, Customer customer, Trip trip) {
         this.id = id;
         this.price = price;
         this.type = type;
@@ -19,9 +19,8 @@ public class Ticket implements Comparable, Serializable {
         this.trip = trip;
     }
 
-    public Ticket(String id, Type type) {
-        this.id = id;
-        this.type = type;
+    public Ticket() {
+        this(null, null, null, null, null);
     }
 
     public String getId() {
@@ -32,11 +31,11 @@ public class Ticket implements Comparable, Serializable {
         this.id = id;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -82,4 +81,5 @@ public class Ticket implements Comparable, Serializable {
     public boolean equals(Object obj) {
         return this.compareTo(obj) == 0;
     }
+
 }
