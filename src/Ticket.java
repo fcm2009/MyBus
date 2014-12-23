@@ -20,6 +20,10 @@ public class Ticket implements Comparable, Serializable {
         this.trip = trip;
     }
 
+    public Ticket(Type type, Customer customer, Trip trip) {
+        this(genrateID(), calculatePrice(type, trip), type, customer, trip);
+    }
+
     public Ticket() {
         this(null, null, null, null, null);
     }
@@ -62,6 +66,19 @@ public class Ticket implements Comparable, Serializable {
 
     public void setTrip(Trip trip) {
         this.trip = trip;
+    }
+
+    public static String genrateID() {
+        return Math.round(Math.random() * 10E9) + "";
+    }
+
+    public static Double calculatePrice(Type type, Trip trip) {
+        GeographicCoordinate fromGS = trip.getDepartureStation().getCity().getGeographicCoordinate();
+        GeographicCoordinate toGS = trip.getArrivalStation().getCity().getGeographicCoordinate();
+        if(type == Type.STANDARD)
+            return fromGS.calculateDistance(toGS) * 0.25;
+        else
+            return fromGS.calculateDistance(toGS) * 0.30;
     }
 
     @Override

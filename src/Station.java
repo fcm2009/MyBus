@@ -9,16 +9,18 @@ public class Station implements Comparable, Serializable {
     private String address;
     private Type type;
     private String workingHours;
+    private City city;
 
-    public Station(String id, String address, Type type, String workingHours) {
+    public Station(String id, String address, Type type, String workingHours, City city) {
         this.id = id;
         this.address = address;
         this.type = type;
         this.workingHours = workingHours;
+        this.city = city;
     }
 
     public Station() {
-        this(null, null, null, null);
+        this(null, null, null, null, null);
     }
 
     public String getId() {
@@ -51,6 +53,14 @@ public class Station implements Comparable, Serializable {
 
     public void setWorkingHours(String workingHours) {
         this.workingHours = workingHours;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     @Override
