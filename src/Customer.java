@@ -11,12 +11,16 @@ public class Customer extends Person {
     private String email;
     private Date dateOfBearth;
 
-    public Customer(String id, Gender gender, String name, String phone, String username, String password, String email, Date dateOfBearth) {
-        super(id, gender, name, phone);
+    public Customer(String id, String name, Gender gender, String phone, String username, String password, String email, Date dateOfBearth) {
+        super(id, name, gender, phone);
         this.username = username;
         this.password = password;
         this.email = email;
         this.dateOfBearth = dateOfBearth;
+    }
+
+    public Customer() {
+        this(null, null, null, null, null, null, null, null);
     }
 
     public String getUsername() {

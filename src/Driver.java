@@ -8,14 +8,14 @@ public class Driver extends Person {
     private String license;
     private Date employmentDate;
 
-    public Driver(String id, Gender gender, String name, String phone, String license, Date employmentDate) {
-        super(id, gender, name, phone);
+    public Driver(String id, String name, Gender gender, String phone, String license, Date employmentDate) {
+        super(id, name, gender, phone);
         this.license = license;
         this.employmentDate = employmentDate;
     }
 
-    public Driver(String id, Gender gender) {
-        super(id, gender);
+    public Driver() {
+        this(null, null, null, null, null, null);
     }
 
     public String getLicense() {

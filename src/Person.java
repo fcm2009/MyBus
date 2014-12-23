@@ -10,15 +10,15 @@ public abstract class Person implements Comparable {
     private String name;
     private String phone;
 
-    public Person(String id, Gender gender, String name, String phone) {
+    public Person(String id, String name, Gender gender, String phone) {
         this.id = id;
-        this.gender = gender;
         this.name = name;
+        this.gender = gender;
         this.phone = phone;
     }
 
-    public Person(String id, Gender gender) {
-        this(id, gender, null, null);
+    public Person() {
+        this(null, null, null, null);
     }
 
     public String getId() {
@@ -29,20 +29,20 @@ public abstract class Person implements Comparable {
         this.id = id;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getPhone() {

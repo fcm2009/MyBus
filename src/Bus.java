@@ -5,20 +5,36 @@ import java.io.Serializable;
  */
 public class Bus implements Comparable, Serializable {
 
-    private int number;
+    private String id;
     private String chassis;
     private Type type;
     private String model;
     private String manufacturer;
     private String plate;
-    private int capacity;
+    private Integer capacity;
+    private Following following;
 
-    public int getNumber() {
-        return number;
+    public Bus(String id, String chassis, Type type, String model, String manufacturer, String plate, Integer capacity, Following following) {
+        this.id = id;
+        this.chassis = chassis;
+        this.type = type;
+        this.model = model;
+        this.manufacturer = manufacturer;
+        this.plate = plate;
+        this.capacity = capacity;
+        this.following = following;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public Bus() {
+        this(null, null, null, null, null, null, null, null);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getChassis() {
@@ -29,7 +45,7 @@ public class Bus implements Comparable, Serializable {
         this.chassis = chassis;
     }
 
-    public Type type() {
+    public Type getType() {
         return type;
     }
 
@@ -61,12 +77,20 @@ public class Bus implements Comparable, Serializable {
         this.plate = plate;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public Following getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Following following) {
+        this.following = following;
     }
 
     @Override
@@ -86,11 +110,6 @@ public class Bus implements Comparable, Serializable {
     @Override
     public boolean equals(Object obj) {
         return this.compareTo(obj) == 0;
-    }
-
-    @Override
-    public String toString() {
-        return "" + number;
     }
 
 }
