@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,6 +11,8 @@ public class Customer extends Person {
     private String password;
     private String email;
     private Date dateOfBearth;
+    private ArrayList<Ticket> ticketsList;
+
 
     public Customer(String id, String name, Gender gender, String phone, String username, String password, String email, Date dateOfBearth) {
         super(id, name, gender, phone);
@@ -17,6 +20,7 @@ public class Customer extends Person {
         this.password = password;
         this.email = email;
         this.dateOfBearth = dateOfBearth;
+        this.ticketsList = new ArrayList<Ticket>();
     }
 
     public Customer() {
@@ -53,6 +57,14 @@ public class Customer extends Person {
 
     public void setDateOfBearth(Date dateOfBearth) {
         this.dateOfBearth = dateOfBearth;
+    }
+
+    public void addTicket(Ticket ticket) {
+        this.ticketsList.add(ticket);
+    }
+
+    public void removeTicket(Ticket ticket) {
+        this.ticketsList.remove(ticket);
     }
 
 }

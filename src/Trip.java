@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -13,6 +14,8 @@ public class Trip implements Comparable, Serializable {
     private Date departureTime;
     private Station arrivalStation;
     private Station departureStation;
+    private ArrayList<Schedule> schedulesList;
+    private ArrayList<Ticket> ticketsList;
 
     public Trip(String id, Type type, WeekDays weekDays, Date arrivalTime, Date departureTime, Station arrivalStation, Station departureStation) {
         this.id = id;
@@ -22,7 +25,8 @@ public class Trip implements Comparable, Serializable {
         this.departureTime = departureTime;
         this.arrivalStation = arrivalStation;
         this.departureStation = departureStation;
-
+        this.schedulesList = new ArrayList<Schedule>();
+        this.ticketsList = new ArrayList<Ticket>();
     }
 
     public Trip(String id, Type type) {
@@ -83,6 +87,22 @@ public class Trip implements Comparable, Serializable {
 
     public void setDepartureStation(Station departureStation) {
         this.departureStation = departureStation;
+    }
+
+    public void addSchedule(Schedule schedule) {
+        schedulesList.add(schedule);
+    }
+
+    public void removeSchedule(Schedule schedule) {
+        schedulesList.remove(schedule);
+    }
+
+    public void addTicket(Ticket ticket) {
+        this.ticketsList.add(ticket);
+    }
+
+    public void removeTicket(Ticket ticket) {
+        this.ticketsList.remove(ticket);
     }
 
     @Override

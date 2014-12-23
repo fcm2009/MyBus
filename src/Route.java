@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
@@ -7,10 +8,12 @@ public class Route implements Comparable, Serializable {
 
     private String id;
     private Double time;
+    private ArrayList<Schedule> schedulesList;
 
     public Route(String id, Double time) {
         this.id = id;
         this.time = time;
+        this.schedulesList = new ArrayList<Schedule>();
     }
 
     public Route() {
@@ -31,6 +34,14 @@ public class Route implements Comparable, Serializable {
 
     public void setTime(Double time) {
         this.time = time;
+    }
+
+    public void addSchedule(Schedule schedule) {
+        schedulesList.add(schedule);
+    }
+
+    public void removeSchedule(Schedule schedule) {
+        schedulesList.remove(schedule);
     }
 
     @Override

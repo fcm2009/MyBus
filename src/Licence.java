@@ -1,17 +1,17 @@
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Driving {
+public class Licence {
 
     private Driver driver;
     private Bus bus;
 
-    public Driving(Driver driver, Bus bus) {
+    public Licence(Driver driver, Bus bus) {
         this.driver = driver;
         this.bus = bus;
     }
 
-    public Driving() {
+    public Licence() {
     }
 
     public Driver getDriver() {
@@ -29,4 +29,5 @@ public class Driving {
     public void setBus(Bus bus) {
         this.bus = bus;
     }
+
 }

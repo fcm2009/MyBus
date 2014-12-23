@@ -1,17 +1,17 @@
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Covering {
+public class Schedule {
 
     private Route route;
     private Trip trip;
 
-    public Covering(Route route, Trip trip) {
+    public Schedule(Route route, Trip trip) {
         this.route = route;
         this.trip = trip;
     }
 
-    public Covering() {
+    public Schedule() {
         this(null, null);
     }
 

@@ -1,17 +1,17 @@
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Following {
+public class Plan {
 
     private Route route;
     private Bus bus;
 
-    public Following(Route route, Bus bus) {
+    public Plan(Route route, Bus bus) {
         this.route = route;
         this.bus = bus;
     }
 
-    public Following() {
+    public Plan() {
     }
 
     public Route getRoute() {

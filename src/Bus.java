@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
@@ -12,9 +13,10 @@ public class Bus implements Comparable, Serializable {
     private String manufacturer;
     private String plate;
     private Integer capacity;
-    private Following following;
+    private ArrayList<Plan> plansList;
+    private ArrayList<Licence> licencesList;
 
-    public Bus(String id, String chassis, Type type, String model, String manufacturer, String plate, Integer capacity, Following following) {
+    public Bus(String id, String chassis, Type type, String model, String manufacturer, String plate, Integer capacity) {
         this.id = id;
         this.chassis = chassis;
         this.type = type;
@@ -22,11 +24,12 @@ public class Bus implements Comparable, Serializable {
         this.manufacturer = manufacturer;
         this.plate = plate;
         this.capacity = capacity;
-        this.following = following;
+        this.plansList = new ArrayList<Plan>();
+        this.licencesList = new ArrayList<Licence>();
     }
 
     public Bus() {
-        this(null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null);
     }
 
     public String getId() {
@@ -85,12 +88,20 @@ public class Bus implements Comparable, Serializable {
         this.capacity = capacity;
     }
 
-    public Following getFollowing() {
-        return following;
+    public void addLicence(Licence licence) {
+        this.licencesList.add(licence);
     }
 
-    public void setFollowing(Following following) {
-        this.following = following;
+    public void removeLicence(Licence licence) {
+        this.licencesList.remove(licence);
+    }
+
+    public void addPlan(Plan plan) {
+        this.plansList.add(plan);
+    }
+
+    public void removePlan(Plan plan) {
+        this.plansList.remove(plan);
     }
 
     @Override
