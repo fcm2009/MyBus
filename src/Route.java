@@ -6,15 +6,15 @@ import java.io.Serializable;
 public class Route implements Comparable, Serializable {
 
     private String id;
-    private double time;
+    private Double time;
 
-    public Route(String id, double time) {
+    public Route(String id, Double time) {
         this.id = id;
         this.time = time;
     }
 
     public Route() {
-        this(null, 0.0);
+        this(null, null);
     }
 
     public String getId() {
@@ -25,11 +25,11 @@ public class Route implements Comparable, Serializable {
         this.id = id;
     }
 
-    public double getTime() {
+    public Double getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(Double time) {
         this.time = time;
     }
 

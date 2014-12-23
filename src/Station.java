@@ -17,9 +17,8 @@ public class Station implements Comparable, Serializable {
         this.workingHours = workingHours;
     }
 
-    public Station(String id, Type type) {
-        this.id = id;
-        this.type = type;
+    public Station() {
+        this(null, null, null, null);
     }
 
     public String getId() {
