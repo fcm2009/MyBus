@@ -74,7 +74,7 @@ public class Bus implements Comparable, Serializable {
         if(o != null) {
             if(o instanceof Bus) {
                 Bus bus = (Bus) o;
-                return this.chassis.compareTo(bus.chassis);
+                return this.chassis.compareTo(bus.getChassis());
             }
             else
                 throw new ClassCastException();

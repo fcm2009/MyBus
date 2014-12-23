@@ -58,7 +58,7 @@ public abstract class Person implements Comparable {
         if(o != null) {
             if(o instanceof Person) {
                 Person person = (Person) o;
-                return this.id.compareTo(person.id);
+                return this.id.compareTo(person.getId());
             }
             else
                 throw new ClassCastException();
