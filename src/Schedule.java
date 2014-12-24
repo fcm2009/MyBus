@@ -1,7 +1,9 @@
+import java.sql.SQLException;
+
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Schedule {
+public class Schedule extends SQLTable {
 
     private Route route;
     private Trip trip;
@@ -29,6 +31,13 @@ public class Schedule {
 
     public void setTrip(Trip trip) {
         this.trip = trip;
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Has_Trip values( '"
+                + route.getId() + "', " + trip.getId() + ")";
+        connectToDB().execute(query);
     }
 
 }

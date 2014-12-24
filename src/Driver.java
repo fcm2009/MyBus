@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -6,16 +7,16 @@ import java.util.Date;
 public class Driver extends Person {
 
     private String license;
-    private Date employmentDate;
+    private String employmentDate;
 
-    public Driver(String id, String name, Gender gender, String phone, String license, Date employmentDate) {
-        super(id, name, gender, phone);
+    public Driver(String id, String firstName, String middleName, String lastName, Gender gender, String phone, String license, String employmentDate) {
+        super(id, firstName, middleName, lastName, gender, phone);
         this.license = license;
         this.employmentDate = employmentDate;
     }
 
     public Driver() {
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null);
     }
 
     public String getLicense() {
@@ -26,12 +27,19 @@ public class Driver extends Person {
         this.license = license;
     }
 
-    public Date getEmploymentDate() {
+    public String getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(Date employmentDate) {
+    public void setEmploymentDate(String employmentDate) {
         this.employmentDate = employmentDate;
     }
 
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Driver values( '"
+                + getFirstName() + "', " + getId() + ", " + getPhone() + ", '" + getGender() + "', " + getLicense()
+                + ", '" + employmentDate + "')";
+        connectToDB().execute(query);
+    }
 }

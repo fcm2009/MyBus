@@ -1,10 +1,11 @@
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.*;
+import java.sql.*;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Bus implements Comparable, Serializable {
+public class Bus extends SQLTable implements Comparable, Serializable {
 
     private String id;
     private String chassis;
@@ -102,6 +103,13 @@ public class Bus implements Comparable, Serializable {
 
     public void removePlan(Plan plan) {
         this.plansList.remove(plan);
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+    	String query = "insert into Bus values("
+    					+ capacity + ", '" + chassis + "', '" + type + "', '" + model + "', '" + manufacturer + "', '" + plate + "', " + id + ")";
+    	connectToDB().execute(query);    					
     }
 
     @Override

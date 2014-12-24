@@ -1,10 +1,11 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Route implements Comparable, Serializable {
+public class Route extends SQLTable implements Comparable, Serializable {
 
     private String id;
     private Double time;
@@ -42,6 +43,13 @@ public class Route implements Comparable, Serializable {
 
     public void removeSchedule(Schedule schedule) {
         schedulesList.remove(schedule);
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Route values( '"
+                + getId() + "', " + time + ")";
+        connectToDB().execute(query);
     }
 
     @Override

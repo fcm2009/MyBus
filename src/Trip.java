@@ -1,23 +1,24 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Trip implements Comparable, Serializable {
+public class Trip extends SQLTable implements Comparable, Serializable {
 
     private String id;
     private Type type;
     private WeekDays weekDays;
-    private Date arrivalTime;
-    private Date departureTime;
+    private String arrivalTime;
+    private String departureTime;
     private Station arrivalStation;
     private Station departureStation;
     private ArrayList<Schedule> schedulesList;
     private ArrayList<Ticket> ticketsList;
 
-    public Trip(String id, Type type, WeekDays weekDays, Date arrivalTime, Date departureTime, Station arrivalStation, Station departureStation) {
+    public Trip(String id, Type type, WeekDays weekDays, String arrivalTime, String departureTime, Station arrivalStation, Station departureStation) {
         this.id = id;
         this.type = type;
         this.weekDays = weekDays;
@@ -57,19 +58,19 @@ public class Trip implements Comparable, Serializable {
         this.weekDays = weekDays;
     }
 
-    public Date getArrivalTime() {
+    public String getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(Date arrivalTime) {
+    public void setArrivalTime(String arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
-    public Date getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Date departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
@@ -103,6 +104,13 @@ public class Trip implements Comparable, Serializable {
 
     public void removeTicket(Ticket ticket) {
         this.ticketsList.remove(ticket);
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Trip_ values("
+                + id + ", '" + type + "', '" + weekDays + "', '" + arrivalTime + "', '" + departureTime + "', '" + arrivalStation + "', '" + departureStation + "')";
+        connectToDB().execute(query);
     }
 
     @Override

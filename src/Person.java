@@ -3,22 +3,26 @@ import java.util.Date;
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public abstract class Person implements Comparable {
+public abstract class Person extends SQLTable implements Comparable {
 
     private String id;
     private Gender gender;
-    private String name;
+    private String firstName;
+    private String middleName;
+    private String lastName;
     private String phone;
 
-    public Person(String id, String name, Gender gender, String phone) {
+    public Person(String id, String firstName, String middleName, String lastName, Gender gender, String phone) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
         this.gender = gender;
         this.phone = phone;
     }
 
     public Person() {
-        this(null, null, null, null);
+        this(null, null, null, null, null, null);
     }
 
     public String getId() {
@@ -29,12 +33,28 @@ public abstract class Person implements Comparable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Gender getGender() {

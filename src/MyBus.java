@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -9,21 +11,26 @@ public class MyBus {
         Ticket ticket = new Ticket(type, customer, trip);
         trip.addTicket(ticket);
         customer.addTicket(ticket);
+        try {
+            ticket.writeToDB();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Internal Error, Try again");
+        }
         return Ticket.calculatePrice(type, trip);
     }
 
     public void cancelTicket(Ticket ticket) {
-        ticket.getTrip().removeTicket(ticket);
         ticket.getCustomer().removeTicket(ticket);
+        ticket.getTrip().removeTicket(ticket);
+        try {
+            ticket.deletefromDB();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Internal Error, Try again");
+        }
     }
 
     public static Double calculatePrice(Type type, Trip trip) {
         return Ticket.calculatePrice(type, trip);
-    }
-
-    public ArrayList<Trip> findTrip() {
-        //sql
-        return null;
     }
 
 }

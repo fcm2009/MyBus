@@ -1,10 +1,11 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Ticket implements Comparable, Serializable {
+public class Ticket extends SQLTable implements Comparable, Serializable {
 
     private String id;
     private Double price;
@@ -73,12 +74,24 @@ public class Ticket implements Comparable, Serializable {
     }
 
     public static Double calculatePrice(Type type, Trip trip) {
-        GeographicCoordinate fromGS = trip.getDepartureStation().getCity().getGeographicCoordinate();
-        GeographicCoordinate toGS = trip.getArrivalStation().getCity().getGeographicCoordinate();
+        GeographicCoordinate fromGS = trip.getDepartureStation().getGeographicCoordinate();
+        GeographicCoordinate toGS = trip.getArrivalStation().getGeographicCoordinate();
         if(type == Type.STANDARD)
             return fromGS.calculateDistance(toGS) * 0.25;
         else
             return fromGS.calculateDistance(toGS) * 0.30;
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Ticket values("
+                + id + ", " + price + ", '" + type + "', " + customer.getId() + ", " + trip.getId() + ")";
+        connectToDB().execute(query);
+    }
+
+    public void deletefromDB() throws SQLException {
+        String query = "delete from Ticket where TNUM = " +  id;
+        connectToDB().execute(query);
     }
 
     @Override

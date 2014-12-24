@@ -1,22 +1,23 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Station implements Comparable, Serializable {
+public class Station extends SQLTable implements Comparable, Serializable {
 
     private String id;
     private String address;
     private Type type;
     private String workingHours;
-    private City city;
+    private GeographicCoordinate geographicCoordinate;
 
-    public Station(String id, String address, Type type, String workingHours, City city) {
+    public Station(String id, String address, Type type, String workingHours, GeographicCoordinate geographicCoordinate) {
         this.id = id;
         this.address = address;
         this.type = type;
         this.workingHours = workingHours;
-        this.city = city;
+        this.geographicCoordinate = geographicCoordinate;
     }
 
     public Station() {
@@ -55,12 +56,19 @@ public class Station implements Comparable, Serializable {
         this.workingHours = workingHours;
     }
 
-    public City getCity() {
-        return city;
+    public GeographicCoordinate getGeographicCoordinate() {
+        return geographicCoordinate;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setGeographicCoordinate(GeographicCoordinate geographicCoordinate) {
+        this.geographicCoordinate = geographicCoordinate;
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Station values('"
+                + id + "', '" + address + "', '" + type + "', '" + workingHours + "', " + geographicCoordinate.getLatitude() + ", " + geographicCoordinate.getLongitude() + ")";
+        connectToDB().execute(query);
     }
 
     @Override

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -10,12 +11,12 @@ public class Customer extends Person {
     private String username;
     private String password;
     private String email;
-    private Date dateOfBearth;
+    private String dateOfBearth;
     private ArrayList<Ticket> ticketsList;
 
 
-    public Customer(String id, String name, Gender gender, String phone, String username, String password, String email, Date dateOfBearth) {
-        super(id, name, gender, phone);
+    public Customer(String id, String firstName, String middleName, String lastName, Gender gender, String phone, String username, String password, String email, String dateOfBearth) {
+        super(id, firstName, middleName, lastName, gender, phone);
         this.username = username;
         this.password = password;
         this.email = email;
@@ -24,7 +25,7 @@ public class Customer extends Person {
     }
 
     public Customer() {
-        this(null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null);
     }
 
     public String getUsername() {
@@ -51,11 +52,11 @@ public class Customer extends Person {
         this.email = email;
     }
 
-    public Date getDateOfBearth() {
+    public String getDateOfBearth() {
         return dateOfBearth;
     }
 
-    public void setDateOfBearth(Date dateOfBearth) {
+    public void setDateOfBearth(String dateOfBearth) {
         this.dateOfBearth = dateOfBearth;
     }
 
@@ -65,6 +66,14 @@ public class Customer extends Person {
 
     public void removeTicket(Ticket ticket) {
         this.ticketsList.remove(ticket);
+    }
+
+    @Override
+    public void writeToDB() throws SQLException {
+        String query = "insert into Customer values( "
+                + getId() + ", '" + getGender() + "', '" + getFirstName() + "', '" + getMiddleName() + "', '" + getLastName()
+                + "', '" + username + "', '" + dateOfBearth + "', " + getPhone() + ", '" + password + "', '" + email + "')";
+        connectToDB().execute(query);
     }
 
 }
