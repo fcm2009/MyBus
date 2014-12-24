@@ -28,32 +28,44 @@ public class Station extends SQLTable implements Comparable, Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address) throws SQLException {
         this.address = address;
+
+        String query = "update Station " +
+                       "set address = '" + address + "' " +
+                       "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Type type) throws SQLException {
         this.type = type;
+
+        String query = "update Station " +
+                "set type = '" + type + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
     }
 
     public String getWorkingHours() {
         return workingHours;
     }
 
-    public void setWorkingHours(String workingHours) {
+    public void setWorkingHours(String workingHours) throws SQLException {
         this.workingHours = workingHours;
+
+        String query = "update Station " +
+                "set workingHours = '" + workingHours + "' "+
+                "where sid = '" + getId() + "'";
+        connectToDB().execute(query);
     }
 
     public GeographicCoordinate getGeographicCoordinate() {
