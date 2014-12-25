@@ -1,12 +1,11 @@
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Trip extends SQLTable implements Comparable, Serializable {
+public class Trip extends NumericalId implements Comparable, Serializable {
 
     private String id;
     private Type type;
@@ -38,63 +37,95 @@ public class Trip extends SQLTable implements Comparable, Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Type type) throws SQLException {
         this.type = type;
+
+        String query = "update TRIP_INSTANCE " +
+                "set type = '" + getType() + "' " +
+                "where TRIP_ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public WeekDays getWeekDays() {
         return weekDays;
     }
 
-    public void setWeekDays(WeekDays weekDays) {
+    public void setWeekDays(WeekDays weekDays) throws SQLException {
         this.weekDays = weekDays;
+
+        String query = "update TRIP_INSTANCE " +
+                "set weekdays = '" + getWeekDays() + "' " +
+                "where TRIP_ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(String arrivalTime) throws SQLException {
         this.arrivalTime = arrivalTime;
+
+        String query = "update TRIP_INSTANCE " +
+                "set ARRIVAL_TIME = '" + getArrivalTime() + "' " +
+                "where TRIP_ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(String departureTime) throws SQLException {
         this.departureTime = departureTime;
+
+        String query = "update TRIP_INSTANCE " +
+                "set DEPARTURE_TIME = '" + getDepartureTime() + "' " +
+                "where TRIP_ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public Station getArrivalStation() {
         return arrivalStation;
     }
 
-    public void setArrivalStation(Station arrivalStation) {
+    public void setArrivalStation(Station arrivalStation) throws SQLException {
         this.arrivalStation = arrivalStation;
+
+        String query = "update TRIP_INSTANCE " +
+                "set type = '" + getType() + "' " +
+                "where ARRIVAL_STATION = " + getArrivalStation();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public Station getDepartureStation() {
         return departureStation;
     }
 
-    public void setDepartureStation(Station departureStation) {
+    public void setDepartureStation(Station departureStation) throws SQLException {
         this.departureStation = departureStation;
+
+        String query = "update TRIP_INSTANCE " +
+                "set DEPARTURE_STATION = '" + getType() + "' " +
+                "where TRIP_ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public void addSchedule(Schedule schedule) {
         schedulesList.add(schedule);
     }
 
-    public void removeSchedule(Schedule schedule) {
+    public void deleteSchedule(Schedule schedule) {
         schedulesList.remove(schedule);
     }
 
@@ -102,14 +133,21 @@ public class Trip extends SQLTable implements Comparable, Serializable {
         this.ticketsList.add(ticket);
     }
 
-    public void removeTicket(Ticket ticket) {
+    public void deleteTicket(Ticket ticket) {
         this.ticketsList.remove(ticket);
     }
 
     @Override
     public void writeToDB() throws SQLException {
-        String query = "insert into Trip_ values("
+        String query = "insert into TRIP values("
                 + id + ", '" + type + "', '" + weekDays + "', '" + arrivalTime + "', '" + departureTime + "', '" + arrivalStation + "', '" + departureStation + "')";
+        connectToDB().execute(query);
+        closeConnection();
+    }
+
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM TRIP_INSTANCE WHERE TRIP_ID = " + getId();
         connectToDB().execute(query);
     }
 

@@ -21,7 +21,13 @@ public class Schedule extends SQLTable {
         return route;
     }
 
-    public void setRoute(Route route) {
+    public void setRoute(Route route) throws SQLException{
+        String query = "update SCHEDULE " +
+                "set ROUTE_ID = '" + route.getId() + "' " +
+                "where ROUTE_ID = '" + this.getRoute().getId() + "' and TRIP_ID = '" + this.getTrip().getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
+
         this.route = route;
     }
 
@@ -29,14 +35,26 @@ public class Schedule extends SQLTable {
         return trip;
     }
 
-    public void setTrip(Trip trip) {
+    public void setTrip(Trip trip) throws SQLException{
+        String query = "update SCHEDULE " +
+                "set TRIP_ID = '" + trip.getId() + "' " +
+                "where ROUTE_ID = '" + this.getRoute().getId() + "' and TRIP_ID = '" + this.getTrip().getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
+
         this.trip = trip;
     }
 
     @Override
     public void writeToDB() throws SQLException {
-        String query = "insert into Has_Trip values( '"
+        String query = "insert into SCHEDULE values( '"
                 + route.getId() + "', " + trip.getId() + ")";
+        connectToDB().execute(query);
+    }
+
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM SCHEDULE WHERE ROUTE_ID = " + getRoute().getId() + " AND TRIP_ID = " + getTrip().getId();
         connectToDB().execute(query);
     }
 

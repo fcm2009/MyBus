@@ -1,7 +1,6 @@
-import java.io.Serializable;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
@@ -11,16 +10,16 @@ public class Customer extends Person {
     private String username;
     private String password;
     private String email;
-    private String dateOfBearth;
+    private String dateOfBirth;
     private ArrayList<Ticket> ticketsList;
 
 
-    public Customer(String id, String firstName, String middleName, String lastName, Gender gender, String phone, String username, String password, String email, String dateOfBearth) {
+    public Customer(String id, String firstName, String middleName, String lastName, Gender gender, String phone, String username, String password, String email, String dateOfBirth) {
         super(id, firstName, middleName, lastName, gender, phone);
         this.username = username;
         this.password = password;
         this.email = email;
-        this.dateOfBearth = dateOfBearth;
+        this.dateOfBirth = dateOfBirth;
         this.ticketsList = new ArrayList<Ticket>();
     }
 
@@ -32,39 +31,63 @@ public class Customer extends Person {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username) throws SQLException {
         this.username = username;
+
+        String query = "update customer " +
+                "set username = '" + getUsername() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws SQLException {
         this.password = password;
+
+        String query = "update customer " +
+                "set password = '" + getPassword() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws SQLException {
         this.email = email;
+
+        String query = "update customer " +
+                "set email = '" + getEmail() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
-    public String getDateOfBearth() {
-        return dateOfBearth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDateOfBearth(String dateOfBearth) {
-        this.dateOfBearth = dateOfBearth;
+    public void setDateOfBirth(String dateOfBirth) throws SQLException {
+        this.dateOfBirth = dateOfBirth;
+
+        String query = "update customer " +
+                "set DATE_OF_BIRTH = '" + getDateOfBirth() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public void addTicket(Ticket ticket) {
         this.ticketsList.add(ticket);
     }
 
-    public void removeTicket(Ticket ticket) {
+    public void deleteTicket(Ticket ticket) {
         this.ticketsList.remove(ticket);
     }
 
@@ -72,7 +95,14 @@ public class Customer extends Person {
     public void writeToDB() throws SQLException {
         String query = "insert into Customer values( "
                 + getId() + ", '" + getGender() + "', '" + getFirstName() + "', '" + getMiddleName() + "', '" + getLastName()
-                + "', '" + username + "', '" + dateOfBearth + "', " + getPhone() + ", '" + password + "', '" + email + "')";
+                + "', '" + username + "', '" + dateOfBirth + "', " + getPhone() + ", '" + password + "', '" + email + "')";
+        connectToDB().execute(query);
+        closeConnection();
+    }
+
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM CUSTOMER WHERE ID = " + getId();
         connectToDB().execute(query);
     }
 

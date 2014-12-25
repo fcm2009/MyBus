@@ -1,11 +1,10 @@
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Ticket extends SQLTable implements Comparable, Serializable {
+public class Ticket extends NumericalId implements Comparable, Serializable {
 
     private String id;
     private Double price;
@@ -21,8 +20,8 @@ public class Ticket extends SQLTable implements Comparable, Serializable {
         this.trip = trip;
     }
 
-    public Ticket(Type type, Customer customer, Trip trip) {
-        this(genrateID(), calculatePrice(type, trip), type, customer, trip);
+    public Ticket(String id, Type type, Customer customer, Trip trip) {
+        this(id, calculatePrice(type, trip), type, customer, trip);
     }
 
     public Ticket() {
@@ -33,44 +32,61 @@ public class Ticket extends SQLTable implements Comparable, Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Double price) throws SQLException{
         this.price = price;
+
+        String query = "update ticket " +
+                "set price = " + price + " " +
+                "where ID = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public void setType(Type type) throws SQLException {
         this.type = type;
+
+        String query = "update SCHEDULE " +
+                "set class = '" + getType() + "' " +
+                "where tnum = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Customer customer) throws SQLException {
         this.customer = customer;
+
+        String query = "update SCHEDULE " +
+                "set cid = " + getCustomer().getId() + " " +
+                "where tnum = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
+
     }
 
     public Trip getTrip() {
         return trip;
     }
 
-    public void setTrip(Trip trip) {
+    public void setTrip(Trip trip) throws SQLException {
         this.trip = trip;
-    }
 
-    public static String genrateID() {
-        return Math.round(Math.random() * 10E9) + "";
+        String query = "update SCHEDULE " +
+                "set tid = " + getTrip().getId() + " " +
+                "where tnum = " + getId();
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public static Double calculatePrice(Type type, Trip trip) {
@@ -89,8 +105,9 @@ public class Ticket extends SQLTable implements Comparable, Serializable {
         connectToDB().execute(query);
     }
 
-    public void deletefromDB() throws SQLException {
-        String query = "delete from Ticket where TNUM = " +  id;
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM TICKET WHERE ID = " +  getId();
         connectToDB().execute(query);
     }
 

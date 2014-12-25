@@ -4,7 +4,7 @@ import java.sql.SQLException;
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Station extends SQLTable implements Comparable, Serializable {
+public class Station extends TextualId implements Comparable, Serializable {
 
     private String id;
     private String address;
@@ -39,7 +39,7 @@ public class Station extends SQLTable implements Comparable, Serializable {
                        "set address = '" + address + "' " +
                        "where id = '" + getId() + "'";
         connectToDB().execute(query);
-
+        closeConnection();
     }
 
     public Type getType() {
@@ -53,6 +53,7 @@ public class Station extends SQLTable implements Comparable, Serializable {
                 "set type = '" + type + "' " +
                 "where id = '" + getId() + "'";
         connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getWorkingHours() {
@@ -63,23 +64,41 @@ public class Station extends SQLTable implements Comparable, Serializable {
         this.workingHours = workingHours;
 
         String query = "update Station " +
-                "set workingHours = '" + workingHours + "' "+
-                "where sid = '" + getId() + "'";
+                "set working_Hours = '" + workingHours + "' "+
+                "where ID = '" + getId() + "'";
         connectToDB().execute(query);
+        closeConnection();
     }
 
     public GeographicCoordinate getGeographicCoordinate() {
         return geographicCoordinate;
     }
 
-    public void setGeographicCoordinate(GeographicCoordinate geographicCoordinate) {
+    public void setGeographicCoordinate(GeographicCoordinate geographicCoordinate) throws SQLException {
         this.geographicCoordinate = geographicCoordinate;
+
+        String latQuery = "update Station " +
+                "set LATITUDE = " + geographicCoordinate.getLatitude() + " "+
+                "where ID = '" + getId() + "'";
+        String lonQuery = "update Station " +
+                "set LONGITUDE = " + geographicCoordinate.getLongitude() + " "+
+                "where ID = '" + getId() + "'";
+        connectToDB().execute(latQuery);
+        connectToDB().execute(lonQuery);
+        closeConnection();
     }
 
     @Override
     public void writeToDB() throws SQLException {
         String query = "insert into Station values('"
                 + id + "', '" + address + "', '" + type + "', '" + workingHours + "', " + geographicCoordinate.getLatitude() + ", " + geographicCoordinate.getLongitude() + ")";
+        connectToDB().execute(query);
+        closeConnection();
+    }
+
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM STATION WHERE ID = '" + getId() + "'";
         connectToDB().execute(query);
     }
 

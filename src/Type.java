@@ -3,6 +3,6 @@
  */
 public enum Type {
 
-    VIP, STANDARD;
+    VIP, STANDARD
 
 }

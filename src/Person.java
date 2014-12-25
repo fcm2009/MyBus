@@ -1,9 +1,9 @@
-import java.util.Date;
+import java.sql.SQLException;
 
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public abstract class Person extends SQLTable implements Comparable {
+public abstract class Person extends NumericalId implements Comparable {
 
     private String id;
     private Gender gender;
@@ -29,48 +29,74 @@ public abstract class Person extends SQLTable implements Comparable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws SQLException {
         this.firstName = firstName;
+
+        String query = "update " + this.getClass().getName() + " " +
+        "set fname = '" + getFirstName() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getMiddleName() {
         return middleName;
     }
 
-    public void setMiddleName(String middleName) {
+    public void setMiddleName(String middleName) throws SQLException {
         this.middleName = middleName;
+
+        String query = "update " + this.getClass().getName() + " " +
+                "set mname = '" + getMiddleName() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws SQLException {
         this.lastName = lastName;
+
+        String query = "update " + this.getClass().getName() + " " +
+                "set lname = '" + getLastName() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(Gender gender) throws SQLException {
         this.gender = gender;
+
+        String query = "update " + this.getClass().getName() + " " +
+                "set gender = '" + getGender() + "' " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(String phone) throws SQLException {
         this.phone = phone;
+
+        String query = "update " + this.getClass().getName() + " " +
+                "set phone = " + getPhone() + " " +
+                "where id = '" + getId() + "'";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     @Override

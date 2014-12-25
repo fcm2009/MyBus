@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Mohammed Alshehry on 12/23/14.
  */
-public class Route extends SQLTable implements Comparable, Serializable {
+public class Route extends TextualId implements Comparable, Serializable {
 
     private String id;
     private Double time;
@@ -25,23 +25,25 @@ public class Route extends SQLTable implements Comparable, Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public Double getTime() {
         return time;
     }
 
-    public void setTime(Double time) {
+    public void setTime(Double time)throws SQLException{
         this.time = time;
+
+        String query = "update route " +
+                "set time = " + time + " " +
+                "where ID = '" + getId() + "' ";
+        connectToDB().execute(query);
+        closeConnection();
     }
 
     public void addSchedule(Schedule schedule) {
         schedulesList.add(schedule);
     }
 
-    public void removeSchedule(Schedule schedule) {
+    public void deleteSchedule(Schedule schedule) {
         schedulesList.remove(schedule);
     }
 
@@ -49,6 +51,12 @@ public class Route extends SQLTable implements Comparable, Serializable {
     public void writeToDB() throws SQLException {
         String query = "insert into Route values( '"
                 + getId() + "', " + time + ")";
+        connectToDB().execute(query);
+    }
+
+    @Override
+    public void deleteFromDB() throws SQLException {
+        String query = "DELETE FROM ROUTE WHERE ID = " + getId();
         connectToDB().execute(query);
     }
 
